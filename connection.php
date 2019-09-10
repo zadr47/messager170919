@@ -2,19 +2,18 @@
 
 function conn(){
 
-/*		
 	//heroku
 	$driver = 'pgsql';				
-	$host = 'ec2-54-246-121-32.eu-west-1.compute.amazonaws.com';				
-	$db_name = 'dfgngu63o3bvv0';
-	$user = "siunpcbvdiimna";
+	$host = 'ec2-54-83-33-14.compute-1.amazonaws.com';				
+	$db_name = 'dd1qpeu338vg4e';
+	$user = "abwckpidopjjfk";
 	$charset = 'utf8';
-	$pass = '5aceb95a0d56b72ac10c3ed0e3fb0465374f7a59d71c2727e47e67ac9853c7a1';
+	$pass = 'ed726fd42c85974440cb161eabf2007e253bc21197ace9642573231155a7b1fe';
 	$port = '5432';
 	$dbpath ='';
 	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
-*/	
 
+/*		
 	//опен сервер
 	$driver = 'mysql';				
 	$host = 'messager090919';				
@@ -25,6 +24,7 @@ function conn(){
 	$port = '';
 	$dbpath ='';
 	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
+*/	
 
 	switch ($driver) {
 		case 'pgsql':
