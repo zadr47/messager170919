@@ -15,7 +15,7 @@ function create_table_registration_data(){
 		$conn->query($sql);
 
 	}catch(PDOException $e){
-		$sql = "CREATE TABLE registration_data ( id INT(11), login VARCHAR(255), password VARCHAR(255), date_reg INT(11) , secret_question VARCHAR(255) , answer VARCHAR(255) );";
+		$sql = "CREATE TABLE registration_data ( id INT, login VARCHAR(255), password VARCHAR(255), date_reg INT , secret_question VARCHAR(255) , answer VARCHAR(255) );";
 		$conn->query($sql);
 	}
 
