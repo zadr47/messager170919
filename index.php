@@ -3,8 +3,8 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/connection.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/function.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/session.php');
-
 create_table_registration_data();
+create_table_data_user();
 
 
 //проверить существует ли авторизированный пользователь
