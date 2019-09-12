@@ -75,9 +75,9 @@ if(isset($data['do_check_in'])){
 	}else{
 		//ошибки есть нужно вывести их на экран
 		$message = $error[0];
-		require_once($_SERVER['DOCUMENT_ROOT'].'/check_in_html.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/check_in_html.php');
 	}
 }else{
 	//кнопка не была нажата
-	require_once($_SERVER['DOCUMENT_ROOT'].'/check_in_html.php');	
+	require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/check_in_html.php');	
 }

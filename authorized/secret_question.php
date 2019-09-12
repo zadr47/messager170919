@@ -26,7 +26,7 @@ if(isset($data['do_question'])){
 		header('Location:/');
 	}else{
 		$message = $error[0];
-		require_once($_SERVER['DOCUMENT_ROOT'].'/secret_question_html.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/secret_question_html.php');
 	}
 }
-require_once($_SERVER['DOCUMENT_ROOT'].'/secret_question_html.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/secret_question_html.php');

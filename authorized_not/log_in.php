@@ -47,9 +47,9 @@ if(isset($data['do_log_in'])){
 	}else{
 		//ошибки есть нужно вывести их на экран
 		$message = $error[0];
-		require_once($_SERVER['DOCUMENT_ROOT'].'/log_in_html.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/log_in_html.php');
 	}
 }else{
 	//кнопка не была нажата
-	require_once($_SERVER['DOCUMENT_ROOT'].'/log_in_html.php');	
+	require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/log_in_html.php');	
 }

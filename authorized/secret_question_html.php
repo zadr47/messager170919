@@ -12,7 +12,7 @@
 		echo "<p>$message</p>";
 
 	endif;?>
-	<form action="/secret_question.php">
+	<form action="/authorized/secret_question.php">
 		<p><input type="radio" name="question" value="school_my_mather">Первая школа в которой училась мама?</p>
 		<p><input type="radio" name="question" value="school_my_father">Первая школа в которой учился отец?</p>
 		<p><input type="radio" name="question" value="mom_last_name">Девичья фамилия мамы?</p>

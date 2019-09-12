@@ -5,7 +5,7 @@
 	<title>password_recovery</title>
 </head>
 <body>
-	<form action="password_recovery.php" method="POST">
+	<form action="/authorized_not/password_recovery.php" method="POST">
 		<?php switch ($value) {
 			case 'login': ?>
 

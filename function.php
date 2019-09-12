@@ -22,6 +22,21 @@ function create_table_registration_data(){
 	$conn = NULL;
 }
 
+function create_table_data_user(){
+	$conn = conn();
+
+	try{
+		$sql = "SELECT * FROM data_user;";
+		$conn->query($sql);
+
+	}catch(PDOException $e){
+		$sql = "CREATE TABLE data_user ( id INT, name VARCHAR(255), last_name VARCHAR(255), date_of_birth  INT , path_to_avatar VARCHAR(255) );";
+		$conn->query($sql);
+	}
+
+	$conn = NULL;
+}
+
 function is_login($login){
 	//логин существует?
 	$conn = conn();
@@ -49,5 +64,10 @@ function is_true_password($login,$password){
 		return true;
 	}else{
 		return false;
+	}
+}
+function is_access(){
+	if(!isset($_SESSION['connection'])){
+		header('Location:/');
 	}
 }

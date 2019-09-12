@@ -40,10 +40,10 @@ if(isset($data['do_login']) || isset($data['do_answer']) || isset($data['do_pass
 				}
 				if(empty($error)){
 					$value = 'answer';
-					require_once($_SERVER['DOCUMENT_ROOT'].'/password_recovery_html.php');
+					require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/password_recovery_html.php');
 				}else{
 					$message = $error[0];
-					require_once($_SERVER['DOCUMENT_ROOT'].'/password_recovery_html.php');
+					require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/password_recovery_html.php');
 				}
 			break;
 
@@ -57,10 +57,10 @@ if(isset($data['do_login']) || isset($data['do_answer']) || isset($data['do_pass
 				if(empty($error)){
 
 					$value = 'password';
-					require_once($_SERVER['DOCUMENT_ROOT'].'/password_recovery_html.php');
+					require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/password_recovery_html.php');
 				}else{
 					$message = $error[0];
-					require_once($_SERVER['DOCUMENT_ROOT'].'/password_recovery_html.php');
+					require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/password_recovery_html.php');
 				}
 			break;
 		case 3:
@@ -85,11 +85,11 @@ if(isset($data['do_login']) || isset($data['do_answer']) || isset($data['do_pass
 					header('location:/');
 				}else{
 					$message = $error[0];
-					require_once($_SERVER['DOCUMENT_ROOT'].'/password_recovery_html.php');
+					require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/password_recovery_html.php');
 				}
 			break;
 	}
 }else{
 	$value = 'login';
-	require_once($_SERVER['DOCUMENT_ROOT'].'/password_recovery_html.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/authorized_not/password_recovery_html.php');
 }
