@@ -18,6 +18,8 @@
 	<a href="/authorized/editing_avatar.php">сменить аву</a>
 	<br />		
 	<a href="/authorized/editing_info.php">редактировать</a>
+	<br />		
+	<a href="/authorized/friends.php">друзья</a>
 
 
 </div>
