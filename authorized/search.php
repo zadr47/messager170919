@@ -83,6 +83,7 @@ if(isset($data['do_search']) || $data['type_search']){
 		}
 		$conn = NULL;
 
+
 		if(empty($search)){
 			require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends_html.php');
 			exit();
@@ -102,6 +103,19 @@ if(isset($data['do_search']) || $data['type_search']){
 		$result_query = $conn->query($sql);
 		$inaccurate_all_friend = $result_query->fetchAll(PDO::FETCH_ASSOC);
 		$conn = NULL;
+		
+		if(empty($inaccurate_all_friend)){
+			foreach ($search as $u) {
+				$my_search[] = ['id'=>$u['id'],
+								'name'=>$u['name'],
+								'last_name'=>$u['last_name'],
+								'date_of_birth'=>$u['date_of_birth'],
+								'path_to_avatar'=>$u['path_to_avatar'],
+								'relation_to_me'=>'add_to_frends'];
+			}
+			require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends_html.php');
+			exit();
+		}
 		
 
 		foreach ($inaccurate_all_friend as $u) {

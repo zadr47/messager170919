@@ -20,6 +20,8 @@ $result_query = $conn->query($sql);
 $inaccurate_all_friend = $result_query->fetchAll(PDO::FETCH_ASSOC);
 $conn = NULL;
 
+
+
 for($i = 0;$i<count($inaccurate_all_friend);$i++){
 	$u = $inaccurate_all_friend[$i];
 	if($u['id']!=$user['id']){
@@ -32,6 +34,10 @@ for($i = 0;$i<count($inaccurate_all_friend);$i++){
 	}
 }
 
+if(empty($all_friend)){
+	require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends_html.php');
+	exit();
+}
 $conn = conn();
 foreach ($all_friend as $u) {
 	if($u['friend']=='yes' && $u['another_friend']=='yes'){
@@ -57,7 +63,5 @@ foreach ($all_friend as $u) {
 }
 
 $conn = NULL;
-
-$data = $_REQUEST;
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends_html.php');

@@ -12,6 +12,9 @@ $conn->query($sql);
 $sql = "DROP TABLE registration_data";
 $conn->query($sql);
 
+$sql = "DROP TABLE friends";
+$conn->query($sql);
+
 $conn = NULL;
 
 header('Location:/');

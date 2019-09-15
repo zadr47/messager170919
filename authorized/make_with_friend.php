@@ -13,9 +13,24 @@ if($data['do_make_with_friend'] == 'Добавить в друзья'){
 	$friend = 'no';
 }
 
+
+
 $sql = "SELECT * FROM friends WHERE id = ".$user['id']." AND another_id = ".$data['id']." OR id = ".$data['id']." AND another_id = ".$user['id'].";";
 $conn = conn();
-$result_query = $conn->query($sql);
+$a = $result_query = $conn->query($sql);
+$data_DB = $result_query->fetch(PDO::FETCH_ASSOC);
+
+if(empty($data_DB)){
+	$sql = "INSERT INTO friends (id,friend,another_id,another_friend) VALUES (".$user['id'].", 'yes',".$data['id'].",'no')";
+	$conn = conn();
+	$conn->query($sql);
+	$conn = NULL;
+	header('Location:/authorized/friends.php');
+}
+
+$sql = "SELECT * FROM friends WHERE id = ".$user['id']." AND another_id = ".$data['id']." OR id = ".$data['id']." AND another_id = ".$user['id'].";";
+$conn = conn();
+$a = $result_query = $conn->query($sql);
 $data_DB = $result_query->fetch(PDO::FETCH_ASSOC);
 
 if($data_DB['id']==$user['id']){

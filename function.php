@@ -45,7 +45,6 @@ function create_table_friends(){
 
 	}catch(PDOException $e){
 		$sql = "CREATE TABLE friends ( id INT , friend VARCHAR(255) , another_id INT , another_friend VARCHAR(255));";
-		echo $sql;
 		$conn->query($sql);
 	}
 
