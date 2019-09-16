@@ -15,6 +15,9 @@ $conn->query($sql);
 $sql = "DROP TABLE friends";
 $conn->query($sql);
 
+
 $conn = NULL;
+
+$_SESSION['connection'] = NULL;
 
 header('Location:/');

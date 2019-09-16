@@ -10,6 +10,9 @@ is_access();
 
 
 $user = $_SESSION['connection'];
+if($user['id']==1){
+	echo "<a href='/DROP_TABLE.php'>DROP_TABLE</a>";
+}
 
 
 $conn = conn();

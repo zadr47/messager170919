@@ -16,6 +16,5 @@
 	<br />
 	<br />
 	<br />
-	<a href='DROP_TABLE.php'>DROP_TABLE</a>
 </body>
 </html>
