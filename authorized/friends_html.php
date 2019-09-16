@@ -138,6 +138,7 @@
 <?php		if($v['relation_to_me'] == 'delete_frend'){$v['relation_to_me'] = 'Удалить из друзей';}			?>
 <?php		if($v['relation_to_me'] == 'add_to_frends'){$v['relation_to_me'] = 'Добавить в друзья';}		?>
 <?php		if($v['relation_to_me'] == 'cancel_quiry_to_frend'){$v['relation_to_me'] = 'Отменить подписку';}?>
+<?php		if($v['relation_to_me'] == 'it_is_me'){$v['relation_to_me'] = 'а это я)';}?>
 
 		
 

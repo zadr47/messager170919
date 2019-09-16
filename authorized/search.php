@@ -81,113 +81,87 @@ if(isset($data['do_search']) || $data['type_search']){
 				$search[$k] = $data_DB;
 			}
 		}
-		$conn = NULL;
 
-
-		if(empty($search)){
-			require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends_html.php');
-			exit();
-		}
-		foreach ($search as $v) {
-			$arr_search_id[] = $v['id'];
-		}
-
-		$sql = "SELECT * FROM friends WHERE";
-		foreach ($arr_search_id as $k => $v) {
-			$sql .= ' id = '.$v.' OR another_id = '.$v.' ';
-			if(isset($arr_search_id[$k + 1])){
-				$sql .=' OR ';				
-			}
-		}
-		$conn = conn();
-		$result_query = $conn->query($sql);
-		$inaccurate_all_friend = $result_query->fetchAll(PDO::FETCH_ASSOC);
-		$conn = NULL;
-		
-		if(empty($inaccurate_all_friend)){
-			foreach ($search as $u) {
+		foreach ($search as $k => $u) {
+			if($u['id'] == $user['id']){
+				$relation = 'it_is_me';
 				$my_search[] = ['id'=>$u['id'],
 								'name'=>$u['name'],
 								'last_name'=>$u['last_name'],
 								'date_of_birth'=>$u['date_of_birth'],
 								'path_to_avatar'=>$u['path_to_avatar'],
-								'relation_to_me'=>'add_to_frends'];
+								'relation_to_me'=>$relation];
+				continue;
 			}
-			require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends_html.php');
-			exit();
-		}
-		
-
-		foreach ($inaccurate_all_friend as $u) {
-			foreach ($arr_search_id as $i) {
-				//нужно выяснить где находится id пользователя которого искали 
-				//в $u['id'] или в $u['another_id']
-				if($u['id']==$i){
-					//проверяю есть ли в $u['another_id'] мой id 
-					//для того что бы знать какую кнопку вывести
-					if($u['another_id'] == $user['id']){
-						//имеют связь нужно выяснить какую
-						if($u['friend']=='yes' && $u['another_friend']=='yes'){
-							$relation = 'delete_frend';							
-						}
-						if($u['friend']=='yes' && $u['another_friend']=='no'){
-							$relation = 'add_to_frends';
-						}
-						if($u['friend']=='no' && $u['another_friend']=='yes'){
-							$relation = 'cancel_quiry_to_frend';
-						}
-						if(empty($relation)){
-							$relation = 'add_to_frends';
-						}
-						$all_friend[] = ['id'=>$u['id'],'relation_to_me'=>$relation];
-					}else{
-						//не имеют связи
-						$relation = 'add_to_frends';
-						$all_friend[] = ['id'=>$u['id'],'relation_to_me'=>$relation];
-					}					
-				}
-				if($u['another_id']==$i){
-					//проверяю есть ли в $u['id'] мой id 
-					//для того что бы знать какую кнопку вывести
-					if($u['id'] == $user['id']){
-						//какую связь я имею с этип пользователем
-						if($u['another_friend']=='yes' && $u['friend']=='yes'){
+			$sql = "SELECT * FROM friends WHERE id = ".$u['id']." OR another_id = ".$u['id'].";";
+			$result_query = $conn->query($sql);
+			$data_DB = $result_query->fetchAll(PDO::FETCH_ASSOC);
+			if(empty($data_DB)){
+				$relation = 'add_to_frends';
+				$my_search[] = ['id'=>$u['id'],
+								'name'=>$u['name'],
+								'last_name'=>$u['last_name'],
+								'date_of_birth'=>$u['date_of_birth'],
+								'path_to_avatar'=>$u['path_to_avatar'],
+								'relation_to_me'=>$relation];
+				continue;
+			}
+			foreach ($data_DB as $i => $v) {
+				if($v['id']==$user['id'] || $v['another_id']==$user['id']){
+					if($v['id']==$user['id']){
+						if($v['friend']=='yes' && $v['another_friend']=='yes'){
 							$relation = 'delete_frend';
 						}
-						if($u['another_friend']=='yes' && $u['friend']=='no'){
-							$relation = 'add_to_frends';
-						}
-						if($u['another_friend']=='no' && $u['friend']=='yes'){
+						if($v['friend']=='yes' && $v['another_friend']=='no'){
 							$relation = 'cancel_quiry_to_frend';
 						}
-						if(empty($relation)){
+						if($v['friend']=='no' && $v['another_friend']=='yes'){
 							$relation = 'add_to_frends';
 						}
-						$all_friend[] = ['id'=>$u['another_id'],'relation_to_me'=>$relation];
+						if($v['friend']=='no' && $v['another_friend']=='no'){
+							$relation = 'add_to_frends';
+						}
+						$my_search[$k] = ['id'=>$u['id'],
+										'name'=>$u['name'],
+										'last_name'=>$u['last_name'],
+										'date_of_birth'=>$u['date_of_birth'],
+										'path_to_avatar'=>$u['path_to_avatar'],
+										'relation_to_me'=>$relation];
+						continue(2);
 					}else{
-						$relation = 'add_to_frends';
-						$all_friend[] = ['id'=>$u['another_id'],'relation_to_me'=>$relation];
+						if($v['another_friend']=='yes' && $v['friend']=='yes'){
+							$relation = 'delete_frend';
+						}
+						if($v['another_friend']=='yes' && $v['friend']=='no'){
+							$relation = 'cancel_quiry_to_frend';
+						}
+						if($v['another_friend']=='no' && $v['friend']=='yes'){
+							$relation = 'add_to_frends';
+						}
+						if($v['another_friend']=='no' && $v['friend']=='no'){
+							$relation = 'add_to_frends';
+						}
+						$my_search[$k] = ['id'=>$u['id'],
+										'name'=>$u['name'],
+										'last_name'=>$u['last_name'],
+										'date_of_birth'=>$u['date_of_birth'],
+										'path_to_avatar'=>$u['path_to_avatar'],
+										'relation_to_me'=>$relation];
+						continue(2);
 					}
+				}else{
+					$relation = 'add_to_frends';
+					$my_search[$k] = ['id'=>$u['id'],
+									'name'=>$u['name'],
+									'last_name'=>$u['last_name'],
+									'date_of_birth'=>$u['date_of_birth'],
+									'path_to_avatar'=>$u['path_to_avatar'],
+									'relation_to_me'=>$relation];
 				}
 			}
 		}
-		foreach ($all_friend as $u) {
-			foreach ($arr_search_id as $id) {
-				if($u['id']==$id){
-					$temp[] = $u;
-				}
-			}
-		}
-		for($i = 0; $i<count($temp);$i++){
-			if($search[$i]['id'] == $temp[$i]['id']){
-				$my_search[$i] = [	'id'=>$search[$i]['id'],
-									'name'=>$search[$i]['name'],
-									'last_name'=>$search[$i]['last_name'],
-									'date_of_birth'=>$search[$i]['date_of_birth'],
-									'path_to_avatar'=>$search[$i]['path_to_avatar'],
-									'relation_to_me'=>$temp[$i]['relation_to_me']];
-			}
-		}
-	}
-}
+		$conn = NULL;
+		//damp($my_search);
+
+}}
 require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends_html.php');
