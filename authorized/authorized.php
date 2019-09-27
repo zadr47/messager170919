@@ -1,48 +1,20 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/connection.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/function.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/session.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/class/user.php');
 
 create_table_data_user();
 
 is_access();
 
 
-$user = $_SESSION['connection'];
-if($user['id']==1){
+$user = new user($_SESSION['user_id']);
+//damp($user);
+
+if($_SESSION['user_id']==1){
 	echo "<a href='/DROP_TABLE.php'>DROP_TABLE</a>";
 }
 
-
-$conn = conn();
-
-$sql = "SELECT * FROM data_user WHERE id = ".$user['id'].";";
-$result_query = $conn->query($sql);
-$data_user = $result_query->fetch(PDO::FETCH_ASSOC);
-
-
-if(empty($data_user)){
-
-	$sql = "SELECT * FROM registration_data WHERE id = ".$user['id'].";";
-	$result_query = $conn->query($sql);
-	$data_DB = $result_query->fetch(PDO::FETCH_ASSOC);
-	$id = $data_DB['id'];
-	$name = $data_DB['login'];
-	$last_name = $data_DB['login'];
-	$date_of_birth = 'NULL';
-	$id_avatar = '/img/standard/standard_avatar.jpg';
-	$sql = "INSERT INTO data_user (id, name, last_name, date_of_birth, path_to_avatar)
-				VALUES ($id,'$name','$last_name',$date_of_birth,'$id_avatar');";
-	$conn->query($sql);
-
-	$sql = "SELECT * FROM data_user WHERE id = ".$user['id'].";";
-	$result_query = $conn->query($sql);
-	$data_user = $result_query->fetch(PDO::FETCH_ASSOC);
-}
-
-
-$conn = NULL;
 
 $data = $_REQUEST;
 

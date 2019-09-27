@@ -1,7 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/connection.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/function.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/session.php');
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/include.php');
 
 $conn = conn();
 
@@ -18,6 +17,6 @@ $conn->query($sql);
 
 $conn = NULL;
 
-$_SESSION['connection'] = NULL;
+$_SESSION['user_id'] = NULL;
 
 header('Location:/');

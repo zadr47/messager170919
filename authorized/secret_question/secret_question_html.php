@@ -6,13 +6,7 @@
 </head>
 <body>
 	Выберите вопрос и ответьте на него.	
-	<div id = "message">
-	<?php if(!empty($message)):	
-			
-		echo "<p>$message</p>";
-
-	endif;?>
-	<form action="/authorized/secret_question.php">
+	<form action="/authorized/secret_question/secret_question.php">
 		<p><input type="radio" name="question" value="school_my_mather">Первая школа в которой училась мама?</p>
 		<p><input type="radio" name="question" value="school_my_father">Первая школа в которой учился отец?</p>
 		<p><input type="radio" name="question" value="mom_last_name">Девичья фамилия мамы?</p>
@@ -23,5 +17,12 @@
 		<p><input type="text" name="answer" placeholder="Ответ"></p>		
 		<p><input type="submit" name="do_question" value="Ответить"></p>
 	</form>
+	<div id = "message">
+	<?php if(!empty($message)):	
+			
+		echo "<p>$message</p>";
+
+	endif;?>
+	</div>
 </body>
 </html>

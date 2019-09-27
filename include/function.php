@@ -44,10 +44,37 @@ function create_table_friends(){
 		$conn->query($sql);
 
 	}catch(PDOException $e){
-		$sql = "CREATE TABLE friends ( id INT , friend VARCHAR(255) , another_id INT , another_friend VARCHAR(255));";
+		$sql = "CREATE TABLE friends ( id INT , another_id INT , relationship VARCHAR(255));";
 		$conn->query($sql);
 	}
 
+	$conn = NULL;
+}
+function create_table_chats(){
+	$conn = conn();
+
+	try{
+		$sql = "SELECT * FROM chats;";
+		$conn->query($sql);
+
+	}catch(PDOException $e){
+		$sql = "CREATE TABLE chats ( id_chat INT, id INT, another_id INT, time_last_change INT);";
+		$conn->query($sql);
+	}
+
+	$conn = NULL;
+}
+function create_table_message(){
+	$conn = conn();
+
+	try{
+		$sql = "SELECT * FROM message;";
+		$conn->query($sql);
+
+	}catch(PDOException $e){
+		$sql = "CREATE TABLE message ( id_chat INT, my_id INT, another_id INT, id INT, message VARCHAR(1023), time_add INT);";
+		$conn->query($sql);
+	}
 	$conn = NULL;
 }
 
@@ -81,7 +108,7 @@ function is_true_password($login,$password){
 	}
 }
 function is_access(){
-	if(!isset($_SESSION['connection'])){
+	if(!isset($_SESSION['user_id'])){
 		header('Location:/');
 	}
 }

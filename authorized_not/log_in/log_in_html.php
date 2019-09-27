@@ -11,7 +11,7 @@
 		echo "<p>$message</p>";
 
 	endif;?>
-	<form action="/authorized_not/log_in.php" method="POST">
+	<form action="/authorized_not/log_in/log_in.php" method="POST">
 		
 		<input type="text" name="login" placeholder="login" value="<?php echo @$_REQUEST['login'] ?>"><br />
 		<input type="password" name="password" placeholder="password"><br />

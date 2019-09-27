@@ -8,14 +8,14 @@
 
 <div id="info">
 	
-	<b><?php echo $data_user['name'].' '.$data_user['last_name']; ?></b>
+	<b><?php echo $user->get_name().' '.$user->get_last_name(); ?></b>
 	<br />
-	<p><?php echo date('d-m-o',$data_user['date_of_birth']); ?></p>
+	<p><?php echo date('d-m-o',$user->get_date_of_birth()); ?></p>
 	<br />
-	<img src="<?php echo $data_user['path_to_avatar'];?>" height="150px" width="150px">
+	<img src="<?php echo $user->get_path_to_avatar();?>" height="150px" width="150px">
 	<br />
 
-	<form action="/authorized/editing_avatar.php" method="POST" enctype="multipart/form-data">
+	<form action="/authorized/editing/avatar.php" method="POST" enctype="multipart/form-data">
 		<input type="file" name="avatar"><br />
 		<input type="submit" name="do_editing_avatar" value="сохранить">
 	</form>

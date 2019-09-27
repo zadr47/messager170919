@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/session.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include.php');
 
-$_SESSION['connection'] = NULL;
+$_SESSION['user_id'] = NULL;
 header('Location:/');

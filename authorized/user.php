@@ -1,70 +1,46 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/connection.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/function.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/session.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/class/user.php');
 
 is_access();
 
-$user = $_SESSION['connection'];
-$data = $_REQUEST;
-$id_another_user = htmlspecialchars($_REQUEST['user_id']);
+$user = new user($_SESSION['user_id']);
 
-if($user['id']==$id_another_user){
+$data = $_REQUEST;
+
+$id_another_user = htmlspecialchars($data['id']);
+
+if($user->get_id()==$id_another_user){
 	header('Location:/');
 }
-$sql = "SELECT * FROM data_user WHERE id = ".$id_another_user.";";
-$conn = conn();
-$result_query = $conn->query($sql);
-$data_another_user = $result_query->fetch(PDO::FETCH_ASSOC);
 
-
-$sql = "SELECT * FROM friends WHERE id = ".$user['id']." AND another_id = ? OR id = ? AND another_id= ".$user['id'];
-$snapshot = $conn->prepare($sql);
-$snapshot->execute([$data_another_user['id'],$data_another_user['id']]);
-$data_DB = $snapshot->fetch(PDO::FETCH_ASSOC);
-$conn = NULL;
-if($data_DB['id']==$user['id'] || $data_DB['another_id'] == $user['id']){
-	//вы с этим userom как-то связаны нужно выяснить как
-	if($data_DB['id']==$data_another_user['id']){
-		if($data_DB['friend'] == 'yes' && $data_DB['another_friend'] == 'yes'){
-			$relation = 'delete_frend';
-		}
-		if($data_DB['friend'] == 'yes' && $data_DB['another_friend'] == 'no'){
-			$relation = 'add_to_frends';
-		}
-		if($data_DB['friend'] == 'no' && $data_DB['another_friend'] == 'yes'){
-			$relation = 'cancel_quiry_to_frend';
-		}
-		if($data_DB['friend'] == 'no' && $data_DB['another_friend'] == 'no'){
-			$relation = 'add_to_frends';
-		}
-	}else{
-		if($data_DB['another_friend'] == 'yes' && $data_DB['friend'] == 'yes'){
-			$relation = 'delete_frend';
-		}
-		if($data_DB['another_friend'] == 'yes' && $data_DB['friend'] == 'no'){
-			$relation = 'add_to_frends';
-		}
-		if($data_DB['another_friend'] == 'no' && $data_DB['friend'] == 'yes'){
-			$relation = 'cancel_quiry_to_frend';
-		}
-		if($data_DB['another_friend'] == 'no' && $data_DB['friend'] == 'no'){
-			$relation = 'add_to_frends';
-		}
-	}
-}else{
-	// ни как не связаны
-	$relation = 'add_to_frends';
+if(isset($data['do_make_with_friend'])){
+	$user->do_make_with_friend($data['id']);
+	header('location:/authorized/user.php?id='.$id_another_user);
 }
-$temp = $data_another_user;
 
-$data_another_user = [	'id'=>$temp['id'],
-						'name'=>$temp['name'],
-						'last_name'=>$temp['last_name'],
-						'date_of_birth'=>$temp['date_of_birth'],
-						'path_to_avatar'=>$temp['path_to_avatar'],
-						'relation_to_me'=>$relation];
+
+$another_user = new user($id_another_user);
+
+$relationship = $user->get_relationship_to($another_user->get_id());
+
+if($relationship == 'fan'){
+	$relationship = 'Отменить заявку в друзья';
+}
+if($relationship == 'not_fan'){
+	$relationship = 'Принять заявку в друзья';
+}
+if($relationship == 'friends'){
+	$relationship = 'Удалить из друзей';
+}
+if($relationship == 'not_friends'){
+	$relationship = 'Добавить в друзья';
+}
+if(empty($relationship)){
+	$relationship = 'Добавить в друзья';
+}
+
 require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/user_html.php');
 
 

@@ -8,18 +8,26 @@
 
 <div id="info">
 
-	<b><?php echo $data_user['name'].' '.$data_user['last_name']; ?></b>
-	<br />
-	<p><?php echo date('d-m-o',$data_user['date_of_birth']); ?></p>
-	<br />
-	<img src="<?php echo $data_user['path_to_avatar'];?>" height="150px" width="150px">
+	<b><?php echo $user->get_name().' '.$user->get_last_name(); ?></b>
 	<br />
 
-	<a href="/authorized/editing_avatar.php">сменить аву</a>
+	<?php if($user->get_date_of_birth() != 0){					?>
+	<p><?php echo date('d-m-o',$user->get_date_of_birth()); ?></p>
+	<br />
+	<?php }	else{												?>
+	<p>День рожденья не указан</p>
+	<br />
+	<?php }														?>
+	<img src="<?php echo $user->get_path_to_avatar();?>" height="150px" width="150px">
+	<br />
+
+	<a href="/authorized/editing/avatar.php">сменить аву</a>
 	<br />		
-	<a href="/authorized/editing_info.php">редактировать</a>
+	<a href="/authorized/editing/info.php">редактировать</a>
 	<br />		
-	<a href="/authorized/friends.php">друзья</a>
+	<a href="/authorized/contacts/friends.php">друзья</a>
+	<br />		
+	<a href="/authorized/message/message.php">сообщения</a>
 
 
 </div>

@@ -1,19 +1,16 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/connection.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/function.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/session.php');
-create_table_registration_data();
-create_table_data_user();
-create_table_friends();
-
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/include.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/class/user.php');
+echo "<a href = '/DROP_TABLE.php'>DROP_TABLE</a><br />";
+if(isset($_SESSION['user_id'])){
+	$user = new user($_SESSION['user_id']);
+}
 //проверить существует ли авторизированный пользователь
-
-if(isset($_SESSION['connection'])){
+if(isset($user)){
 	//существует отправить на авторизованную страницу
-	if(empty($_SESSION['connection']['answer'])){
-		require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/secret_question.php');
+	if($user->first_connection()){
+		require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/secret_question/secret_question.php');
 	}else{
 		require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/authorized.php');
 	}

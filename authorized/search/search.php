@@ -1,5 +1,130 @@
-<?php 
+<?php
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/include.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/class/user.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/class/search.php');
+
+$data = $_REQUEST;
+
+if(empty(trim($data['search']))){
+	header('location:'.$data['return_search_to']);	
+}
+
+if($data['table'] == 'friends'){
+	$search = new search('friends','id',$_SESSION['user_id']);
+	$arr_friends_with_my_id = $search->do_search();
+	foreach ($arr_friends_with_my_id as $key => $f) {
+		$arr_id_my_friends[] = $f->another_id;
+	}
+	$search = new search('data_user',['name','last_name'],$data['search']);
+	$data_search = $search->do_search();
+
+	foreach ($data_search as $k => $f) {
+		$friends[] = new user($f->id);
+	}
+	require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends/friends_html_1_1.php');
+	exit();
+}
+if(empty($data['table'])){
+	$table = 'data_user';
+	$key = ['name','last_name'];
+	$search = new search($table,$key,$data['search']);
+	$arr_result_search = $search->do_search();
+	foreach($arr_result_search as $k => $f){
+		$friends[] = new user($f->id);
+	}
+	damp($friends);
+	require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/search/search_html.php');
+	exit();
+}
+//damp($data);
+//damp($friends);
+/*
+$table = 'data_user';
+
+if(isset($data['table'])){
+	$table = $data['table'];
+}
+
+$key = ['name','last_name'];
+
+$search = new search($table,$key,$data['search']);
+
+damp($search);
+
+$friends = $search->do_search();
+
+damp($friends);
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 require_once($_SERVER['DOCUMENT_ROOT'].'/connection.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/function.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/session.php');
@@ -165,3 +290,4 @@ if(isset($data['do_search']) || $data['type_search']){
 
 }}
 require_once($_SERVER['DOCUMENT_ROOT'].'/authorized/friends_html.php');
+*/
